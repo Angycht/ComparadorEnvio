@@ -295,7 +295,7 @@ class ZonaEnvio
     }
   
 
-    public function determinarZonaEnvioGLS($origenCP, $destinoCP,$destinoPais){
+    public function determinarZonaEnvioGLS($origenCP, $destinoCP){
         // Definir las provincias y sus códigos postales
         $provincias = [
             'Álava' => range(1000, 1999),
@@ -349,12 +349,12 @@ class ZonaEnvio
     
     
        // Definir las Islas Baleares y sus códigos postales
-       $balearesGLS = range(07001,07699);
+     /*  $balearesGLS = range(07001,07699);
        $balearesMenorGLS= range(07700,07899);
 
        // Definir las Islas Canarias y sus códigos postales
        $canariasGLS = range(35000,35499);
-       $canariaMenorGLS= range(35000,35669);
+       $canariaMenorGLS= range(35000,35669);*/
        //Comprobamos que el envio sea a baleares
        if($this->esBaleares($destinoCP)){
             return 'baleares';
@@ -380,11 +380,11 @@ class ZonaEnvio
     }
 
     private function esBaleares($destinoCP){
-        return ($destinoCP >= 07000 && $destinoCP<=07699);
+        return ($destinoCP >= 7000 && $destinoCP<=7699);
     }
     
     private function esBalearesMenor($destinoCP){
-        return ($destinoCP>=07700 && $destinoCP<=07899);
+        return ($destinoCP>=7700 && $destinoCP<=7899);
     }
 
     private function esCanarias($destinoCP){

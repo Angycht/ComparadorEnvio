@@ -1,10 +1,11 @@
 <?php
-require_once 'TarifasEnvio.php'; // Incluye la clase TarifasEnvio
+require_once 'TarifasEnvio.php';
+require_once 'TarifaGls.php'; // Incluye la clase TarifasEnvio
 require_once 'ZonaEnvio.php'; // Incluye la clase ZonaEnvio
 $tarifa = new TarifasEnvio();
 $tarifa1 = new TarifasEnvio(); // Crea un objeto de la clase TarifasEnvio
 $determinarZona = new ZonaEnvio();
-
+$tarifaGLS= new TarifasGls() ;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['origenCP']) && isset($_POST['destinoCP']) && isset($_POST['peso'])) {
 
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Obtener la zona de origen y destino
         $zonaEnvio = $determinarZona->determinarZonaEnvio($origenCP, $destinoCP, $destinoPais);
-
+        $zonaEnvioGLS = $determinarZona->determinarZonaEnvioGLS($origenCP, $destinoCP);
         $zonaEnvioSeur = $determinarZona->determinarZonaEnvioSeur( $destinoCP);
         // Obtener la tarifa correspondiente para Paquete Estándar
         $tarifaEstandar = $tarifa->obtenerTarifaPaqEstandar($peso_aplicable, $zonaEnvio);
@@ -64,6 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tarifaPremiumOficina = $tarifa->obtenerTarifaPaqPremiumOficina($peso_aplicable, $zonaEnvio);
         // Obtener la tarifa correspondiente para Paquete Seur
         $tarifaSeur = $tarifa->obtenerTarifaSeur($pesoSeur, $zonaEnvioSeur);
+        //Obtener la tarifa correspondiente para GLS
+       
+        $tarifaBusiness = $tarifaGLS->obtenerTarifaBusinessParcel($pesoGLS, $zonaEnvioGLS);
+        $tarifa10= $tarifaGLS->obtenerTarifaDiezService($pesoGLS, $zonaEnvioGLS);
+      
+        $tarifa8= $tarifaGLS->obtenerTarifaOchoService($pesoGLS, $zonaEnvioGLS);
+        $tarifa2= $tarifaGLS->obtenerTarifaDosService($pesoGLS, $zonaEnvioGLS);
         // Obtener la tarifa correspondiente para Paquete Ligero (solo si el peso está dentro del rango)
         $tarifaLigero = null;
         if ($peso_aplicable <= 2 && $peso_aplicable >= 0.05) {
@@ -275,6 +283,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa Seur</h3>';
                 echo '<p>' . $tarifaSeur. ' EUR</p>';
+                echo '</div>';
+            } else {
+                echo '';
+            }
+            echo '<h2>GLS:</h2>';
+            // Mostrar tarifa seur
+            if ($tarifaBusiness) {
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa Business</h3>';
+                echo '<p>' . $tarifaBusiness. ' EUR</p>';
+                echo '</div>';
+            } else {
+                echo '';
+            }
+            if ($tarifa10) {
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa 10:00</h3>';
+                echo '<p>' . $tarifa10. ' EUR</p>';
+                echo '</div>';
+            } else {
+                echo '';
+            }
+            if ($tarifa8) {
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa 08:00</h3>';
+                echo '<p>' . $tarifa8. ' EUR</p>';
+                echo '</div>';
+            } else {
+                echo '';
+            }
+            if ($tarifa2) {
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa 14:00</h3>';
+                echo '<p>' . $tarifa2. ' EUR</p>';
                 echo '</div>';
             } else {
                 echo '';
