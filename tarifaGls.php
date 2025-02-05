@@ -12,7 +12,7 @@ class TarifasGls
 
     public function obtenerTarifaOchoService($peso,$zona){
         $zona = strtolower(trim($zona));
-        $zonaValida = ['provincia','peninsula'];
+        $zonasValidas = ['provincia','peninsula'];
 
         if (!in_array($zona, $zonasValidas)) {
             throw new Exception("Zona inválida : $zona");
@@ -33,7 +33,7 @@ class TarifasGls
 
     public function obtenerTarifaDiezService($peso, $zona){
         $zona = strtolower(trim($zona));
-        $zonaValida = ['provincia','peninsula','baleares','canarias'];
+        $zonasValidas = ['provincia','peninsula','baleares','canarias'];
 
         if (!in_array($zona, $zonasValidas)) {
             throw new Exception("Zona inválida : $zona");
@@ -54,7 +54,7 @@ class TarifasGls
 
     public function obtenerTarifaDosService($peso,$zona){
         $zona = strtolower(trim($zona));
-        $zonaValida = ['provincia','peninsula','baleares','canarias','baleares_menor','canarias_menor'];
+        $zonasValidas = ['provincia','peninsula','baleares','canarias','baleares_menor','canarias_menor'];
 
         if (!in_array($zona, $zonasValidas)) {
             throw new Exception("Zona inválida : $zona");
@@ -75,7 +75,7 @@ class TarifasGls
 
     public function obtenerTarifaBusinessParcel($peso,$zona){
         $zona = strtolower(trim($zona));
-        $zonaValida = ['provincia','peninsula','baleares','canarias','baleares_menor','canarias_menor'];
+        $zonasValidas = ['provincia','peninsula','baleares','canarias','baleares_menor','canarias_menor'];
 
         if (!in_array($zona, $zonasValidas)) {
             throw new Exception("Zona inválida : $zona");

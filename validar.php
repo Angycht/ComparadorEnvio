@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $pesoSeur=$peso_aplicable;
+        $pesoGLS=$peso_aplicable;
         // Validar que los campos no estén vacíos
         if (empty($origenCP) || empty($destinoCP) || empty($peso_real)) {
             echo '<p style="color: red;">Error: Todos los campos son requeridos.</p>';
