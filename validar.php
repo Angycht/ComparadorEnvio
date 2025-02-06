@@ -75,8 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        }
         $tarifaBusiness = $tarifaGLS->obtenerTarifaBusinessParcel($pesoGLS, $zonaEnvioGLS);
         $tarifa10= $tarifaGLS->obtenerTarifaDiezService($pesoGLS, $zonaEnvioGLS);
-       
-        if($zonaEnvioGLS != 'baleares' || $zonaEnvioGLS != 'baleares_menor' || $zonaEnvioGLS != 'canarias' || $zonaEnvioGLS != 'canarias_menor' || $zonaEnvioGLS=="ceuta_melilla"){
+        if($zonaEnvioGLS != 'baleares' && $zonaEnvioGLS != 'baleares_menor' && $zonaEnvioGLS != 'canarias' && $zonaEnvioGLS != 'canarias_menor' && $zonaEnvioGLS=="ceuta_melilla"){
             $tarifa8= $tarifaGLS->obtenerTarifaOchoService($pesoGLS, $zonaEnvioGLS);
         }
         
@@ -89,8 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         if($pesoGLS > 1 && $zonaEnvioGLS=="baleares"||$zonaEnvioGLS=="canarias"|| $zonaEnvioGLS=="ceuta_melilla"||$zonaEnvioGLS=="baleares_menor"||$zonaEnvioGLS=="canarias_menor"){ 
             $tarifaBusiness = $tarifaGLS->obtenerTarifaPesoExtraBusiness($zonaEnvioGLS)*(ceil($pesoGLS)-1);
-            $tarifa10 = $tarifaGLS->obtenerTarifaPesoExtraDiez( $zonaEnvio) *(ceil($pesoGLS)-1);
-            $tarifa2 = $tarifaGLS->obtenerTarifaPesoExtraDos( $zonaEnvio) *(ceil($pesoGLS)-1);
+            $tarifa10 = $tarifaGLS->obtenerTarifaPesoExtraDiez( $zonaEnvioGLS) *(ceil($pesoGLS)-1);
+            $tarifa2 = $tarifaGLS->obtenerTarifaPesoExtraDos( $zonaEnvioGLS) *(ceil($pesoGLS)-1);
          
         }
 
@@ -199,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             /* Estilo para los mensajes de error */
-            .error-message {
+                #noDisponible{
                 padding: 10px;
                 background-color: #fdd;
                 border-radius: 6px;
@@ -229,6 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 .tarifa-container p {
                     font-size: 16px;
                 }
+                
             }
         </style>
 
@@ -317,13 +317,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo '';
             }
-            if ($tarifa8) {
+            if ($zonaEnvioGLS != 'baleares' && $zonaEnvioGLS != 'baleares_menor' && $zonaEnvioGLS != 'canarias' && $zonaEnvioGLS != 'canarias_menor' && $zonaEnvioGLS=="ceuta_melilla") {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa 08:00</h3>';
                 echo '<p>' . $tarifa8. ' EUR</p>';
                 echo '</div>';
             } else {
-                echo '';
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa 08:00</h3>';
+                echo '<p id="noDisponible">No hay datos diponibles</p>';
+                echo '</div>';
             }
             if ($tarifa2) {
                 echo '<div class="tarifa-container">';
