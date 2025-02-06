@@ -75,8 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
        }
         $tarifaBusiness = $tarifaGLS->obtenerTarifaBusinessParcel($pesoGLS, $zonaEnvioGLS);
         $tarifa10= $tarifaGLS->obtenerTarifaDiezService($pesoGLS, $zonaEnvioGLS);
-      
-        $tarifa8= $tarifaGLS->obtenerTarifaOchoService($pesoGLS, $zonaEnvioGLS);
+       
+        if($zonaEnvioGLS != 'baleares' || $zonaEnvioGLS != 'baleares_menor' || $zonaEnvioGLS != 'canarias' || $zonaEnvioGLS != 'canarias_menor' || $zonaEnvioGLS=="ceuta_melilla"){
+            $tarifa8= $tarifaGLS->obtenerTarifaOchoService($pesoGLS, $zonaEnvioGLS);
+        }
+        
         $tarifa2= $tarifaGLS->obtenerTarifaDosService($pesoGLS, $zonaEnvioGLS);
         // Obtener la tarifa correspondiente para Paquete Ligero (solo si el peso está dentro del rango)
         $tarifaLigero = null;
@@ -87,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($pesoGLS > 1 && $zonaEnvioGLS=="baleares"||$zonaEnvioGLS=="canarias"|| $zonaEnvioGLS=="ceuta_melilla"||$zonaEnvioGLS=="baleares_menor"||$zonaEnvioGLS=="canarias_menor"){ 
             $tarifaBusiness = $tarifaGLS->obtenerTarifaPesoExtraBusiness($zonaEnvioGLS)*(ceil($pesoGLS)-1);
             $tarifa10 = $tarifaGLS->obtenerTarifaPesoExtraDiez( $zonaEnvio) *(ceil($pesoGLS)-1);
-            $tarifa8 = $tarifaGLS->obtenerTarifaPesoExtraOcho( $zonaEnvio) *(ceil($pesoGLS)-1);
             $tarifa2 = $tarifaGLS->obtenerTarifaPesoExtraDos( $zonaEnvio) *(ceil($pesoGLS)-1);
          
         }
