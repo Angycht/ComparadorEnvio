@@ -66,8 +66,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Obtener la tarifa correspondiente para Paquete Seur
        
         //Obtener la tarifa correspondiente para GLS
-       if($tarifaSeur){
+       if($zonaEnvioSeur=='Corto' || $zonaEnvioSeur=='Largo'  || $zonaEnvioSeur=='Medio' ){
+           
          $tarifaSeur = $tarifa->obtenerTarifaSeur($pesoSeur, $zonaEnvioSeur);
+       
          if($pesoSeur>20){
             $tarifaExtraSeur = $tarifa1->pesoExtraSeur($zonaEnvioSeur) * (ceil($pesoSeur) - 20);
             $tarifaSeur = $tarifa->obtenerTarifaSeur(20, $zonaEnvioSeur)+$tarifaExtraSeur;
@@ -77,6 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tarifa10= $tarifaGLS->obtenerTarifaDiezService($pesoGLS, $zonaEnvioGLS);
         if($zonaEnvioGLS != 'baleares' && $zonaEnvioGLS != 'baleares_menor' && $zonaEnvioGLS != 'canarias' && $zonaEnvioGLS != 'canarias_menor' && $zonaEnvioGLS=="ceuta_melilla"){
             $tarifa8= $tarifaGLS->obtenerTarifaOchoService($pesoGLS, $zonaEnvioGLS);
+            if($pesoGLS>15){
+                $tarifa8Extra = $tarifaGLS->obtenerTarifaPesoExtraOcho( $zonaEnvioGLS) *(ceil($pesoGLS)-15);
+
+                $tarifa8=$tarifaGLS->obtenerTarifaOchoService(1,$zonaEnvioGLS)+$tarifa8Extra;
+            }
         }
         
         $tarifa2= $tarifaGLS->obtenerTarifaDosService($pesoGLS, $zonaEnvioGLS);
@@ -87,9 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if($pesoGLS > 1 && $zonaEnvioGLS=="baleares"||$zonaEnvioGLS=="canarias"|| $zonaEnvioGLS=="ceuta_melilla"||$zonaEnvioGLS=="baleares_menor"||$zonaEnvioGLS=="canarias_menor"){ 
-            $tarifaBusiness = $tarifaGLS->obtenerTarifaPesoExtraBusiness($zonaEnvioGLS)*(ceil($pesoGLS)-1);
-            $tarifa10 = $tarifaGLS->obtenerTarifaPesoExtraDiez( $zonaEnvioGLS) *(ceil($pesoGLS)-1);
-            $tarifa2 = $tarifaGLS->obtenerTarifaPesoExtraDos( $zonaEnvioGLS) *(ceil($pesoGLS)-1);
+            $tarifaBusinessExtra = $tarifaGLS->obtenerTarifaPesoExtraBusiness($zonaEnvioGLS)*(ceil($pesoGLS)-1);
+            $tarifa10Extra = $tarifaGLS->obtenerTarifaPesoExtraDiez( $zonaEnvioGLS) *(ceil($pesoGLS)-1);
+            $tarifa2Extra = $tarifaGLS->obtenerTarifaPesoExtraDos( $zonaEnvioGLS) *(ceil($pesoGLS)-1);
+
+            $tarifaBusiness=$tarifaGLS->obtenerTarifaBusinessParcel(1,$zonaEnvioGLS)+$tarifaBusinessExtra;
+            $tarifa10=$tarifaGLS->obtenerTarifaDiezService(1,$zonaEnvioGLS)+$tarifa10Extra;
+            $tarifa2=$tarifaGLS->obtenerTarifaDosService(1,$zonaEnvioGLS)+$tarifa2Extra;
          
         }
 
@@ -291,13 +302,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             echo '<h2>Seur:</h2>';
             // Mostrar tarifa seur
-            if ($tarifaSeur!=null) {
+            if ($zonaEnvioSeur=='Corto' || $zonaEnvioSeur=='Largo'  || $zonaEnvioSeur=='Medio' ) {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa Seur</h3>';
                 echo '<p>' . $tarifaSeur. ' EUR</p>';
                 echo '</div>';
             } else {
-                echo 'No hay datos disponibles';
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa Seur</h3>';
+                echo '<p id="noDisponible">No hay datos diponibles</p>';
+                echo '</div>';
             }
             echo '<h2>GLS:</h2>';
             // Mostrar tarifa seur
