@@ -259,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa Paquete Estándar</h3>';
-                echo '<p class="error-message">Error: No se encontró una tarifa para los datos proporcionados.</p>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
                 echo '</div>';
             }
 
@@ -270,7 +270,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p>' . $tarifaPremium . ' EUR</p>';
                 echo '</div>';
             } else {
-                echo '';
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa Paquete Premium</h3>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
+                echo '</div>';
             }
           
 
@@ -282,7 +285,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p>' . $tarifaLigero . ' EUR</p>';
                 echo '</div>';
             } else {
-                echo '';
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa Paquete Ligero</h3>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
+                echo '</div>';
             }
             // Mostrar tarifa estándar
             if ($destinoPais == "España") {
@@ -290,15 +296,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<h3>Recoger paquete en oficina Estandar</h3>';
                 echo '<p>' . $tarifaEstandarOficina . ' EUR</p>';
                 echo '</div>';
+            }else{
+                echo '<div class="tarifa-container">';
+                echo '<h3>Recoger paquete en oficina Estandar</h3>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
+                echo '</div>';
             }
 
             // Mostrar tarifa premium
-            if ($destinoPais == "España") { {
+            if ($destinoPais == "España") { 
                     echo '<div class="tarifa-container">';
                     echo '<h3>Recoger paquete en oficina Premium</h3>';
                     echo '<p>' . $tarifaPremiumOficina . ' EUR</p>';
                     echo '</div>';
-                }
+                
+            }else{
+                echo '<div class="tarifa-container">';
+                echo '<h3>Recoger paquete en oficina Premium</h3>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
+                echo '</div>';
             }
             echo '<h2>Seur:</h2>';
             // Mostrar tarifa seur
@@ -321,7 +337,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p>' . $tarifaBusiness. ' EUR</p>';
                 echo '</div>';
             } else {
-                echo '';
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa Business</h3>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
+                echo '</div>';
             }
             if ($tarifa10) {
                 echo '<div class="tarifa-container">';
@@ -329,7 +348,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p>' . $tarifa10. ' EUR</p>';
                 echo '</div>';
             } else {
-                echo '';
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa 10:00</h3>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
+                echo '</div>';
             }
             if ($zonaEnvioGLS != 'baleares' && $zonaEnvioGLS != 'baleares_menor' && $zonaEnvioGLS != 'canarias' && $zonaEnvioGLS != 'canarias_menor' && $zonaEnvioGLS=="ceuta_melilla") {
                 echo '<div class="tarifa-container">';
@@ -348,7 +370,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p>' . $tarifa2. ' EUR</p>';
                 echo '</div>';
             } else {
-                echo '';
+                echo '<div class="tarifa-container">';
+                echo '<h3>Tarifa 14:00</h3>';
+                echo '<p id="noDisponible">No hay datos disponibles</p>';
+                echo '</div>';
             }
             
     }
