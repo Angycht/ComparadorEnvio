@@ -318,7 +318,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             echo '<h2>Seur:</h2>';
             // Mostrar tarifa seur
-            if ($zonaEnvioSeur=='Corto' || $zonaEnvioSeur=='Largo'  || $zonaEnvioSeur=='Medio' ) {
+            if ($destinoPais == 'España'&&$zonaEnvioSeur=='Corto' || $zonaEnvioSeur=='Largo'  || $zonaEnvioSeur=='Medio'  ) {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa Seur</h3>';
                 echo '<p>' . $tarifaSeur. ' EUR</p>';
@@ -330,8 +330,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '</div>';
             }
             echo '<h2>GLS:</h2>';
-            // Mostrar tarifa seur
-            if ($tarifaBusiness) {
+            if ( $destinoPais == 'España') {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa Business</h3>';
                 echo '<p>' . $tarifaBusiness. ' EUR</p>';
@@ -342,7 +341,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p id="noDisponible">No hay datos disponibles</p>';
                 echo '</div>';
             }
-            if ($tarifa10) {
+            if ( $destinoPais == 'España') {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa 10:00</h3>';
                 echo '<p>' . $tarifa10. ' EUR</p>';
@@ -353,7 +352,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p id="noDisponible">No hay datos disponibles</p>';
                 echo '</div>';
             }
-            if ($zonaEnvioGLS != 'baleares' && $zonaEnvioGLS != 'baleares_menor' && $zonaEnvioGLS != 'canarias' && $zonaEnvioGLS != 'canarias_menor' && $zonaEnvioGLS=="ceuta_melilla") {
+            if ($zonaEnvioGLS != 'baleares' && $zonaEnvioGLS != 'baleares_menor' && $zonaEnvioGLS != 'canarias' && $zonaEnvioGLS != 'canarias_menor' && $zonaEnvioGLS!="ceuta_melilla"&& $destinoPais == 'España') {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa 08:00</h3>';
                 echo '<p>' . $tarifa8. ' EUR</p>';
@@ -364,7 +363,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo '<p id="noDisponible">No hay datos diponibles</p>';
                 echo '</div>';
             }
-            if ($tarifa2) {
+            if ( $destinoPais == 'España') {
                 echo '<div class="tarifa-container">';
                 echo '<h3>Tarifa 14:00</h3>';
                 echo '<p>' . $tarifa2. ' EUR</p>';
