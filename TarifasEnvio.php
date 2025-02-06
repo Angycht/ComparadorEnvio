@@ -182,7 +182,7 @@ class TarifasEnvio
         
         
         // Construir la consulta SQL con el nombre de la zona dinámicamente
-        $sql = "SELECT $zona FROM seur WHERE id=12 ";
+        $sql = "SELECT $zona FROM seur WHERE id= 12 ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -248,13 +248,15 @@ public function obtenerTarifaSeur($peso, $zona) {
 
  
     // Construir la consulta SQL para obtener la tarifa correspondiente al peso
-    $sql = "SELECT $zona FROM seur WHERE Kilo >= $peso  ";
+    $sql = "SELECT $zona FROM seur WHERE Kilo >= $peso ";
     $stmt = $this->pdo->prepare($sql);
+    
+    // Ejecutar la consulta
     $stmt->execute();
     
-    // Obtener el resultado de la consulta
+    // Obtener el resultado
     $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-   
+    
     // Verificar si se obtuvo un resultado
     if ($resultado) {
         return $resultado[$zona]; // Devolver el valor correspondiente a la zona
